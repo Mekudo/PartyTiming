@@ -14,21 +14,18 @@ public partial class CreateEventWindow : Window
     public CreateEventWindow()
     {
         InitializeComponent();
-        SelectedDate = DateTime.Today; // Устанавливаем начальную дату на сегодняшний день
+        SelectedDate = DateTime.Today;
         DataContext = this;
         this.Width = 300;
         this.Height = 350;
-
     }
 
-
-    private void ConfirmButton_Click(object sender, RoutedEventArgs e)
+        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
     {
         if (DBConnection.ConnectionDB())
         {
             string checkQuery = $"SELECT COUNT(*) FROM Event WHERE EventDate = '{SelectedDate:yyyy-MM-dd}' AND id_account = {IdAcount}";
 
-            // SQL-запрос для вставки данных пользователя в таблицу Users
             try
             {
                 DBConnection.msCommand.CommandText = checkQuery;
@@ -36,7 +33,6 @@ public partial class CreateEventWindow : Window
 
                 if (count > 0)
                 {
-                    // Запись существует, выполнить операцию обновления
                     string updateQuery = $@"UPDATE Event SET eventName = '{EventName}', eventDescription = '{EventDescription}' WHERE EventDate = '{SelectedDate:yyyy-MM-dd}'";
 
                     DBConnection.msCommand.CommandText = updateQuery;
@@ -48,7 +44,6 @@ public partial class CreateEventWindow : Window
                 {
                     string query = $"INSERT INTO Event (id_account, eventName, eventDescription, eventDate) VALUES ('{IdAcount}', '{EventName}', '{EventDescription}', '{SelectedDate:yyyy-MM-dd}')";
 
-                    // Выполнение SQL-запроса
                     DBConnection.msCommand.CommandText = query;
                     DBConnection.msCommand.ExecuteNonQuery();
 
@@ -64,17 +59,10 @@ public partial class CreateEventWindow : Window
             }
             finally
             {
-                // Закрытие соединения с базой данных
                 program.newMainWindow.eventLoad(this, null);
                 DBConnection.CloseDb();
             }
         }
         this.Close();
-
     }
-
-
-
-
-
 }
