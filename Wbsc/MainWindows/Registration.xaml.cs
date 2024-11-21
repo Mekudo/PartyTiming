@@ -16,9 +16,9 @@ using System.Data.SqlClient;
 namespace Wbsc
 {
 
-    public partial class Registation : Window
+    public partial class Registration : Window
     {
-        public Registation()
+        public Registration()
         {
             InitializeComponent();
         }
