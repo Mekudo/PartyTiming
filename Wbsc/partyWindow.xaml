@@ -1,0 +1,112 @@
+﻿<Window x:Class="Wbsc.partyWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wbsc"
+        mc:Ignorable="d"
+        Title="partyWindow" MinHeight="550" MinWidth="800" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="Silver"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Gray"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="DarkGray"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Image">
+            <Setter Property="Opacity" Value="10"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="0.3"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <!-- Первый столбец для добавленных элементов слева -->
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+
+            <!-- Второй столбец для основного содержимого (календаря и кнопок) -->
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <!-- Добавленные элементы слева -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50px" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto"  />
+                <RowDefinition Height="auto"  />
+                <RowDefinition Height="*"  />
+                <RowDefinition Height="auto"  />
+                <RowDefinition Height="auto"  />
+
+
+            </Grid.RowDefinitions>
+
+            <Image x:Name="image1" Source="Images/111.png" Stretch="Fill" Margin="2,0,0,25" Grid.Column="0" Grid.Row="1" Width="40" Height="40" MouseLeftButtonDown="ImageClickHandler"/>
+            <Image Margin="2,0,0,25" Grid.Column="0" Grid.Row="2" x:Name="image2" Source="Images/002-.png" Width="40" Height="40"  MouseLeftButtonDown="ImageClickHandler" />
+            <Image Margin="2,0,0,25" Grid.Column="0" Grid.Row="3" x:Name="image3" Source="Images/55.png" Width="40" Height="40"  MouseLeftButtonDown="ImageClickHandler"/>
+            <Image Margin="2,0,0,25" Grid.Column="0" Grid.Row="4" x:Name="image4" Source="Images/events.png" Width="40" Height="40"  MouseLeftButtonDown="ImageClickHandler"/>
+            <Image Margin="2,0,0,25" Grid.Column="0" Grid.Row="5" x:Name="image6" Source="Images/leave.png" MinWidth="40" MinHeight="40"  MaxWidth="40" MaxHeight="40" MouseLeftButtonDown="ImageClickHandler"/>
+            <Image Margin="2,0,0,10" Grid.Column="0"  Grid.Row="8" x:Name="image5" Source="Images/11.png" Width="40" Height="40"  MouseLeftButtonDown="ImageClickHandler"/>
+
+            <Image Margin="2,0,0,25" Grid.Column="0" Grid.Row="6" x:Name="image7" Source="Images/del.png" Width="40" Height="40"  MouseLeftButtonDown="ImageClickHandler"/>
+
+        </Grid>
+        <Grid Grid.Column="1" Margin="2,0,2,0">
+            <Rectangle  Grid.Column="1" Width="1" Grid.RowSpan="8"  Fill="Gray"/>
+        </Grid>
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Content="&#x2190;" Click="PrevMonthButton_Click"/>
+                <DatePicker x:Name="CalendarDate" SelectedDateChanged="CalendarDate_SelectedDateChanged"/>
+                <Button Content="&#x2192;" Click="NextMonthButton_Click"/>
+            </StackPanel>
+            <ItemsControl x:Name="CalendarItems" Grid.Row="1" ItemsSource="{Binding Days }">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="7"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Black" BorderThickness="1">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Date.Day}"  FontWeight="Bold"/>
+                                <TextBlock Text="{Binding EventName}" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis" MaxWidth="200" FontWeight="Bold"/>
+                                <TextBlock Margin="0,5,0,0" Text="{Binding EventDescription}" HorizontalAlignment="Center" TextWrapping="Wrap" MaxWidth="200"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+    </Grid>
+</Window>
